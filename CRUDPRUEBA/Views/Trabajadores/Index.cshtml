@@ -1,0 +1,78 @@
+﻿@model IEnumerable<CRUDPRUEBA.Models.SpTrabajadores>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Control trabajadores</h1>
+
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#registrarEmpleado">
+    Registrar nuevo trabajador
+</button>
+<input type="checkbox" id="pintarFilas"/><label>Pintar filas</label>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tipo documento
+            </th>
+            <th>
+                Num Documento
+            </th>
+            <th>
+                Nombres
+            </th>
+            <th>
+                Sexo
+            </th>
+            <th>
+                Departamento
+            </th>
+            <th>
+                Provincia
+            </th>
+            <th>
+                Distrito
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="tablaEmpleados">
+@foreach (var item in Model) {
+        <tr data-sexo="@item.Sexo">
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoDocumento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroDocumento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombres)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sexo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreDepartamento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreProvincia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreDistrito)
+            </td>
+            <td>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarEmpleado" onclick="editarTrabajador('@item.Id','@item.TipoDocumento','@item.NumeroDocumento','@item.Nombres','@item.Sexo','@item.IdDepartamento','@item.IdProvincia', '@item.IdDistrito')">
+                        Editar
+                    </button>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarEmpleado" onclick="eliminarTrabajador('@item.Id')">
+                        Eliminar
+                    </button>
+            </td>
+        </tr>
+}
+        </tbody>
+</table>
+@await Html.PartialAsync("_CreatePartialView", new Trabajadores())
+@await Html.PartialAsync("_EditPartialView", new Trabajadores())
+@await Html.PartialAsync("_DeletePartialView", new Trabajadores())
